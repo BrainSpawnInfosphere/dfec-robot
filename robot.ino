@@ -1,30 +1,23 @@
 
 
-
-
 #include <Wire.h>
-#include <L3G4200D.h>
-#include <LSM303.h>
-
-#include "cTone.h"
 #include "TB6612FNG.h"
-#include "cSensor.h"
 
-#define m1a    22
-#define m1b    23
-#define m1pwm  7
-#define m2a    24
-#define m2b    25
-#define m2pwm  8
-#define RESET   14
-#define BEEP    15
+const int m1a    = 22
+const int m1b    = 23
+const int m1pwm  = 7
+const int m2a    = 24
+const int m2b    = 25
+const int m2pwm  = 8
+const int RESET  = 14
+const int BEEP   = 15
 
 
 class Robot {
 public:
 	Robot(){
-		this->motorAB = MotorDriver(m1pwm,m1a,m1b,m2pwm,m2a,m2b);
-		this->begin();
+		this->motorAB = new MotorDriver(m1pwm,m1a,m1b,m2pwm,m2a,m2b);
+		this->motorAB.begin();
 	}
 	// dir <xxxx d c b a>  0 - reverse, 1 - forward
 	// void setMotors(byte dir, byte a, byte b, byte c, byte d){
@@ -35,23 +28,34 @@ public:
 		if(dir & 2) motorAB.motor1Forward(b);
 		else motorAB.motor1Reverse(b);
 	}
+
 	void allStop(){
 		motorAB.coastBothMotors();
 		delay(100);
 		motorAB.stopBothMotors();
 	}
 
+	void run(){
+		// check sensors
+		// move motors
+	}
+
 private:
 	MotorDriver motorAB*;
-}
+};
+
+Robot robot = Robot();
 
 
 void setup(){
-	robot = Robot();
+	Serial.begin(9600);
+	Serial.println('hello world');
 }
 
 
 void loop(){
-	;
-
+	while(true){
+		robot.run();
+		delay(100);
+	}
 }

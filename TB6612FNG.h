@@ -3,14 +3,14 @@
 #ifndef __TB6612FNG_H__
 #define __TB6612FNG_H__
 
-#include <Arduino.h> 
-
+// #include <Arduino.h>
+#include <stdint.h>
 
 class MotorDriver {
 public:
 
   MotorDriver(int pwmA, int a0, int a1, int pwmB, int b0, int b1, int reset=-1) :
-  pwmA_pin(pwmA), pwmB_pin(pwmB), A0_pin(a0), A1_pin(a1), B0_pin(b0), 
+  pwmA_pin(pwmA), pwmB_pin(pwmB), A0_pin(a0), A1_pin(a1), B0_pin(b0),
   B1_pin(b1), reset_pin(reset) {
 
     pinMode(pwmA_pin, OUTPUT);
