@@ -6,12 +6,24 @@
 // #include <Arduino.h>
 #include <stdint.h>
 
+/**
+ * ATmega328P, pwm works on pins 3, 5, 6, 9, 10, and 11 at 490/980Hz
+ */
 class MotorDriver {
 public:
 
-  MotorDriver(int pwmA, int a0, int a1, int pwmB, int b0, int b1, int reset=-1) :
-  pwmA_pin(pwmA), pwmB_pin(pwmB), A0_pin(a0), A1_pin(a1), B0_pin(b0),
-  B1_pin(b1), reset_pin(reset) {
+  MotorDriver(void){
+    ;
+  }
+  
+  void init(int pwmA, int a0, int a1, int pwmB, int b0, int b1, int reset=-1){
+    pwmA_pin = pwmA;
+    pwmB_pin = pwmB;
+    A0_pin = a0;
+    A1_pin = a1;
+    B0_pin = b0;
+    B1_pin = b1;
+    reset_pin = reset;
 
     pinMode(pwmA_pin, OUTPUT);
     pinMode(pwmB_pin, OUTPUT);
@@ -35,6 +47,7 @@ public:
   }
 
   void motor0Forward(uint8_t speed){
+//    Serial.println("motor0Forward");
     digitalWrite(A0_pin,LOW);
     digitalWrite(A1_pin,HIGH);
     analogWrite(pwmA_pin, speed);
@@ -101,7 +114,7 @@ public:
 
 protected:
 
-  const int pwmA_pin, pwmB_pin, A0_pin, A1_pin, B0_pin, B1_pin, reset_pin;
+  int pwmA_pin, pwmB_pin, A0_pin, A1_pin, B0_pin, B1_pin, reset_pin;
 };
 
 #endif
