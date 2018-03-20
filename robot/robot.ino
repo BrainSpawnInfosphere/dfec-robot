@@ -92,24 +92,24 @@ public:
   if (front > detect){
     if (left > detect && right > detect){
       turnRight(spd);
-      delay(1000); // try to get 180 with 2 delays
+      delay(fturn); // try to get 180 with 2 delays
     }
     else if (left > detect){
       turnRight(spd);
-      delay(1000);
+      delay(lrturn);
     }
     else {
       turnLeft(spd);
-      delay(1000);
+      delay(lrturn);
     }
   }
   else if (left > detect){
       turnRight(spd);
-      delay(1000);
+      delay(lrturn);
     }
   else if (right > detect){
       turnLeft(spd);
-      delay(1000);
+      delay(lrturn);
     }
   else {
     forward(50);
