@@ -33,6 +33,20 @@ module board(){
     color("green") translate([-10, -7.5, 0]) cube([20,15,19]);
 }
 
+module board_mnt(){
+    // won't work like this!!!
+    // solder bumps on the back will push it up higher
+    w = 20;
+    dia = 5;
+    difference(){
+        rotate([0,90,0]) cylinder(h=w,d=dia, center=true);
+        translate([-w,0,-dia/4]) cube([2*w,dia,dia/2]);  // groove
+        translate([-w,-dia/2,-dia/2]) cube([2*w,dia,dia/2]);  // cut off bottom
+    }
+}
+
+//board_mnt();
+
 module motor_straight(){
     difference(){
         union(){
@@ -220,8 +234,10 @@ module base_plate_s(thick, draw=false){
         translate([16,-34,0]) cylinder(h=10,d=hole_440, center=true);
     }
     
-    // electronics board
-    translate([-10,0,-thick/2-1]) rotate([180,0,0]) board();
+    if (draw){
+        // electronics board
+        translate([-10,0,-thick/2-1]) rotate([180,0,0]) board();
+    }
     
     // caster wheels
     translate([35,0,0]) caster();
@@ -284,7 +300,7 @@ module motor_plate_s(thick, draw=false){
 }
 
 
-motor_plate_s(thick, true);
-translate([0,0,28]) base_plate_s(thick);
+//motor_plate_s(thick, false);
+//translate([0,0,28]) base_plate_s(thick);
 
-//motor_straight();
+base_plate_s(thick, false);
