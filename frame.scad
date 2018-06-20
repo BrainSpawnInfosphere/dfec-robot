@@ -13,14 +13,21 @@ module plate(thick=3){
 }
 
 module irholes(){
-    translate([0,2.1,2.1]) rotate([0,90,0]) cylinder(10,d=2.5,center=true);
-    translate([0,10.8-2.1,23.4+2.1/2]) rotate([0,90,0]) cylinder(10,d=2.5,center=true);
+    translate([0,2.1,2.1]) rotate([0,-90,0]){
+        cylinder(10,d=hole_256,center=true);
+        translate([0,0,-1]) cylinder(10,d=2.5*hole_256,center=false);
+    }
+    translate([0,10.8-2.1,23.4+2.1/2+2]) rotate([0,-90,0]){
+        cylinder(10,d=hole_256,center=true);
+        translate([0,0,-1]) cylinder(10,d=2.5*hole_256,center=false);
+    }
+    translate([-5,8,-1]) cube([10,7,12]);  // connector
 }
 
 module ir_mnt(){
     translate([0,-15/2,0]) difference(){
-        cube([3,15,35]);
-        translate([0,2.5,3]) irholes();
+        cube([3,13,30]);
+        translate([0,2.5,1]) irholes();
     }
 }
 
@@ -221,21 +228,32 @@ module base_plate_s(thick, draw=false){
         cylinder(h=thick,d=100, center=true);
         
         // IR cuts
-        translate([48,0,0]) cube([10,50,10], center=true);
-        translate([28,15,-thick]) cube([35,50,10], center=false);
-        translate([28,-15,thick]) rotate([180,0,0]) cube([35,50,10], center=false);
+        translate([48,0,0]) cube([10,50,10], center=true);  // front
+        translate([28,15,-thick]) cube([35,50,10], center=false);  // robot right
+        translate([28,-15,thick]) rotate([180,0,0]) cube([35,50,10], center=false);  // robot left
         
         // wheel cuts
-        translate([0,54,0]) cube([65,30,10], center=true);
-        translate([0,-54,0]) cube([65,30,10], center=true);
+        translate([0,57,0]) cube([65,30,10], center=true);
+        translate([0,-57,0]) cube([65,30,10], center=true);
         
         // holes
-        translate([16,34,0]) cylinder(h=10,d=hole_440, center=true);
-        translate([16,-34,0]) cylinder(h=10,d=hole_440, center=true);
+        translate([16,37,0]) cylinder(h=10,d=hole_440, center=true);
+        translate([16,-37,0]) cylinder(h=10,d=hole_440, center=true);
+        
+        // electronics board holes
+        translate([-43,35/2-3,0]) cylinder(h=10,d=hole_256, center=true);
+        translate([-43,-35/2+3,0]) cylinder(h=10,d=hole_256, center=true);
+        translate([63-43,35/2-3,0]) cylinder(h=10,d=hole_256, center=true);
+        translate([63-43,-35/2+3,0]) cylinder(h=10,d=hole_256, center=true);
     }
     
+<<<<<<< HEAD
     if (draw){
         // electronics board
+=======
+    // electronics board
+    if (draw){
+>>>>>>> aa75e32dec23ce2409879322cab7f08783aae942
         translate([-10,0,-thick/2-1]) rotate([180,0,0]) board();
     }
     
@@ -244,7 +262,7 @@ module base_plate_s(thick, draw=false){
     translate([-40,0,0]) caster();
     
     // line following array
-    translate([16,0,0]) array_mnt(68);
+//    translate([16,0,0]) array_mnt(68);
 }
 
 
@@ -252,11 +270,11 @@ module base_plate_s(thick, draw=false){
 module motor_plate_s(thick, draw=false){
     color("lightblue") difference()
     {
-        cylinder(h=thick,d=100, center=true);
+        cylinder(h=thick,d=100, center=true); // main disk plate
         
         // wheel cut outs
-        translate([0,54,0]) cube([65,30,10], center=true);
-        translate([0,-54,0]) cube([65,30,10], center=true);
+        translate([0,57,0]) cube([65,30,10], center=true);
+        translate([0,-57,0]) cube([65,30,10], center=true);
         
         // jumper access
         translate([-54,0,0]) cube([40,50,10], center=true);
@@ -266,6 +284,9 @@ module motor_plate_s(thick, draw=false){
         translate([50,0,0]) cube([6,50,10], center=true);
         translate([30,25,-thick]) cube([35,50,10], center=false);
         translate([30,-25,thick]) rotate([180,0,0]) cube([35,50,10], center=false);
+        
+        // power switch
+        translate([25, -37, -4]) cylinder(h=8,d=5.5);
     }
     
     
@@ -279,17 +300,17 @@ module motor_plate_s(thick, draw=false){
     
     // motor mounts
 //    translate([-14,37,thick/2]) color("lightblue") motor_mnt();
-    translate([-20,37,thick/2]) color("lightblue") motor_mnt();
-    translate([-20,-37,25+thick/2]) rotate([180,0,0]) color("lightblue") motor_mnt();
+    translate([-20,40,thick/2]) color("lightblue") motor_mnt();
+    translate([-20,-40,25+thick/2]) rotate([180,0,0]) color("lightblue") motor_mnt();
     
     if (draw){
         translate([0,0,22.8/2+thick/2]){
 //            translate([-20,28,1]){
-            translate([-26,27.5,1]){
+            translate([-26,30.5,1]){
                 motor_straight();
                 translate([26,22,0]) wheel();
             }
-            translate([-26,-27.5,1]){
+            translate([-26,-30.5,1]){
                 rotate([180,0,0]){
                     motor_straight();
 //                    translate([26,22,0]) wheel();
@@ -301,6 +322,17 @@ module motor_plate_s(thick, draw=false){
 
 
 //motor_plate_s(thick, false);
+<<<<<<< HEAD
 //translate([0,0,28]) base_plate_s(thick);
 
 base_plate_s(thick, false);
+=======
+//translate([0,0,28]) base_plate_s(thick, true);
+
+// line following array
+//translate([16,0,29.5]) array_mnt(74);
+
+//motor_straight();
+//base_plate_s(thick, false);
+array_mnt(74);
+>>>>>>> aa75e32dec23ce2409879322cab7f08783aae942
