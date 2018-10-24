@@ -1,5 +1,8 @@
 # DFEC Robot
 
+## Example Software
+
+The example SW is written for the Arduino and is found in `robot-2` as an example.
 
 ## Hardware
 
